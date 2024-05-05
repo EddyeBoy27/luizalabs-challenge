@@ -1,0 +1,41 @@
+services:
+
+  mongo:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    container_name: mongodb
+    env_file:
+      - .env
+    volumes:
+      - ./mongo_data:/data/db  # Persistência dos dados do MongoDB
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro  # O arquivo só será executado na primeira vez que o volume for criado
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASS}
+      MONGO_INITDB_DATABASE: ${DATABASE_NAME}
+    networks:
+      - nestjs-mongodb
+
+  app:
+    container_name: backend_nestjs
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    depends_on:
+      - mongo # Dependência do MongoDB
+    networks:
+      - nestjs-mongodb
+
+networks:
+  nestjs-mongodb:
+    driver: bridge
+
+volumes:
+  mongo_data:
