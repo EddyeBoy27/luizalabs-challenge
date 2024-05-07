@@ -5,6 +5,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { GlobalExceptionFilter } from './middlewares/global.exception.filter';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/authentication/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UsersModule } from './modules/users/users.module';
       }),
       inject: [ConfigService],
     }),
+    AuthModule,
     UsersModule,
   ],
   controllers: [],

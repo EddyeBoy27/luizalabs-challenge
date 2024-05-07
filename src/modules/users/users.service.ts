@@ -25,7 +25,7 @@ export class UsersService {
       ...bodyData,
       password: hashedPassword,
     });
-    const user = (await createdUser.save()).toObject();
+    const user = (await createdUser.save())?.toObject();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _password, ...userData } = user;
     return userData;
@@ -34,5 +34,13 @@ export class UsersService {
   async getAllUsers(): Promise<UserPayload[]> {
     const users = this.userModel.find();
     return users;
+  }
+
+  async getUser(email: string, query?: string): Promise<UserPayload> {
+    const user = (
+      await this.userModel.findOne({ email: email }).select(query).exec()
+    )?.toObject();
+
+    return user;
   }
 }
