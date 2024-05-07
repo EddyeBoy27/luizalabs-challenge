@@ -6,6 +6,7 @@ import { GlobalExceptionFilter } from './middlewares/global.exception.filter';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/authentication/auth.module';
+import { ProductModule } from './modules/products/products.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AuthModule } from './modules/authentication/auth.module';
     }),
     AuthModule,
     UsersModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [

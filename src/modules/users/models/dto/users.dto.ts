@@ -7,6 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { IProduct } from 'src/modules/products/model/interfaces/product.interface';
 import { ROLES } from 'src/shared/constants';
 
 export class UserDTO {
@@ -43,6 +44,20 @@ export class UserDTO {
     },
   )
   password: string;
+
+  @ApiProperty({
+    description: 'Lista de produtos favoritos',
+    example: {
+      price: 1699,
+      image:
+        'http://challenge-api.luizalabs.com/images/1bf0f365-fbdd-4e21-9786-da459d78dd1f.jpg',
+      brand: 'bébé confort',
+      id: '1bf0f365-fbdd-4e21-9786-da459d78dd1f',
+      title: 'Cadeira para Auto Iseos Bébé Confort Earth Brown',
+    },
+    required: false,
+  })
+  wishlist?: IProduct[];
 
   @ApiProperty({
     description: 'Authorization on app routes',

@@ -10,3 +10,8 @@ export const ERROR_MESSAGES = {
   USER_ALREADY_EXISTS: 'Conflict.',
   FORBIDDEN: 'Access denied.',
 };
+
+export const LUIZA_API = {
+  ALL_PRODUCTS: 'http://challenge-api.luizalabs.com/api/product',
+  PRODUCT_DETAILED: 'http://challenge-api.luizalabs.com/api/product',
+};

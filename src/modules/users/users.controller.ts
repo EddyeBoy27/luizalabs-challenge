@@ -21,7 +21,7 @@ export class UsersController {
   }
 
   @Get()
-  @ApiResponse({ status: 200, description: 'Ok.' })
+  @ApiResponse({ status: 200, description: 'OK.' })
   async getAllUsers(): Promise<UserPayload[]> {
     const users = await this.userService.getAllUsers();
     return users;
