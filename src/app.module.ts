@@ -4,6 +4,7 @@ import configuration from './config/configuration';
 import { APP_FILTER } from '@nestjs/core';
 import { GlobalExceptionFilter } from './middlewares/global.exception.filter';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       }),
       inject: [ConfigService],
     }),
+    UsersModule,
   ],
   controllers: [],
   providers: [

@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 const PORT = parseInt(process.env.SERVER_PORT, 10 || 3000);
 
@@ -19,6 +20,19 @@ async function bootstrap() {
   });
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.use(helmet());
+
+  const config = new DocumentBuilder()
+    .setTitle('LuizaLabs/Magalu Wishlist')
+    .setDescription(
+      'Desafio técnico Dev Pleno AppSec LuizaLabs/Magalu - Wishlist',
+    )
+    .setVersion('1.0')
+    .addTag('Wishlist')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('doc', app, document);
 
   await app.listen(PORT);
 
