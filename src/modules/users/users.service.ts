@@ -30,4 +30,9 @@ export class UsersService {
     const { password: _password, ...userData } = user;
     return userData;
   }
+
+  async getAllUsers(): Promise<UserPayload[]> {
+    const users = this.userModel.find();
+    return users;
+  }
 }

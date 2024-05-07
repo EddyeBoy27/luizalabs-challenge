@@ -7,6 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { ROLES } from 'src/shared/constants';
 
 export class UserDTO {
   @ApiProperty({
@@ -49,7 +50,7 @@ export class UserDTO {
     required: true,
   })
   @IsString({ each: true })
-  @IsIn(['ROLE_ADMIN', 'ROLE_USER'], {
+  @IsIn([ROLES.USER], {
     each: true,
     message: 'Invalid role provided.',
   })

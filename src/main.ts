@@ -27,12 +27,11 @@ async function bootstrap() {
       'Desafio técnico Dev Pleno AppSec LuizaLabs/Magalu - Wishlist',
     )
     .setVersion('1.0')
-    .addTag('Wishlist')
     .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('doc', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(PORT);
 
