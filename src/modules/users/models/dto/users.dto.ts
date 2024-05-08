@@ -7,8 +7,8 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { IProduct } from 'src/modules/products/model/interfaces/product.interface';
-import { ROLES } from 'src/shared/constants';
+import { IProduct } from '../../../../modules/products/model/interfaces/product.interface';
+import { ROLES } from '../../../../shared/constants';
 
 export class UserDTO {
   @ApiProperty({

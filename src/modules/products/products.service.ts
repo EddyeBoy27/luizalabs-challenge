@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ERROR_MESSAGES, LUIZA_API } from 'src/shared/constants';
+import { ERROR_MESSAGES, LUIZA_API } from '../../shared/constants';
 import { IProduct } from './model/interfaces/product.interface';
 import { IProducts } from './model/interfaces/products.interface';
 

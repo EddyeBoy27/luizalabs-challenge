@@ -10,14 +10,16 @@ import * as bcrypt from 'bcrypt';
 
 import { UsersService } from '../users/users.service';
 import { UserPayload } from '../users/models/payload/users.payload';
-import { ERROR_MESSAGES } from 'src/shared/constants';
+import { ERROR_MESSAGES } from '../../shared/constants';
 import { IJwtToken } from './model/interfaces/jwt-token.interface';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     readonly jwtService: JwtService,
     private readonly userService: UsersService,
+    private readonly configService: ConfigService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<UserPayload> {
@@ -52,8 +54,20 @@ export class AuthService {
     }
   }
 
-  async signIn(user: UserPayload): Promise<IJwtToken> {
-    const payload = { sub: user.name, email: user.email, roles: user.roles };
+  async signIn(user: any): Promise<IJwtToken> {
+    const payload = {
+      userId: user._id,
+      sub: user.name,
+      email: user.email,
+      roles: user.roles,
+    };
     return { access_token: this.jwtService.sign(payload) };
+  }
+
+  async validateUserToken(token: string): Promise<UserPayload> {
+    const decoded = await this.jwtService.verifyAsync<UserPayload>(token, {
+      secret: this.configService.get<string>('api.secret'),
+    });
+    return decoded;
   }
 }

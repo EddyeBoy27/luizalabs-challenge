@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IProduct } from 'src/modules/products/model/interfaces/product.interface';
+import { IProduct } from '../../../../modules/products/model/interfaces/product.interface';
 
 @Schema({ collection: 'users', timestamps: true, versionKey: false })
 export class User {
