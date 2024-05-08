@@ -8,12 +8,32 @@ O Magalu está expandindo seus negócios e uma das novas missões do time de
 tecnologia é criar uma funcionalidade de Produtos Favoritos de nossos Clientes, em
 que os nossos aplicativos irão enviar requisições HTTP para um novo backend que
 deverá gerenciar nossos clientes e seus produtos favoritos.
+___
+
+## Índice
+
+- [Desenho da Aplicação](#desenho-da-aplicação)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Segurança](#segurança)
+- [Instalações Necessárias](#instalações-necessárias)
+- [Preparando o ambiente](#preparando-o-ambiente)
+- [Iniciando a Aplicação](#iniciando-a-aplicação)
+- [Acesso à aplicação](#acesso-à-aplicação)
+- [Documentação das Rotas](#documentação-das-rotas)
+- [Módulo de Login](#módulo-de-login)
+- [Módulo de Usuários](#módulo-de-usuários)
+- [Módulo de Produtos](#módulo-de-produtos)
+- [Módulo de Itens Favoritos](#módulo-de-itens-favoritos-wishlist)
+
+
 
 ___
 
-# Desenho da Aplicação
+## Desenho da Aplicação
 
 ![alt text](<Architecture Challenge.png>)
+
+- [Voltar ao índice](#índice)
 
 ___
 
@@ -26,6 +46,8 @@ ___
   * JWT
   * Mongoose
   * MongoDB
+
+- [Voltar ao índice](#índice)
 
 ___
 
@@ -43,9 +65,11 @@ A aplicação foi pensada levando em conta pontos importantes da segurança como
 * Controle de requisições com Throttler que atua na <b>prevenção</b> de ataques de força bruta ou negação de serviço (DoS)
 * A aplicação utiliza o CORS (Cross-Origin Resource Sharing) para controlar o acesso de recursos entre diferentes origens.
 
+- [Voltar ao índice](#índice)
+
 ___
 
-# Instalações necessárias
+## Instalações necessárias
 
 Abra o terminal e navegue até onde deseja armazenar o repositório
 
@@ -75,6 +99,9 @@ Este guia de instalação e utilização da API será realizado considerando sis
 
 [Tutorial de instalação Docker-Compose (Em inglês)](https://www.ionos.com/digitalguide/server/configuration/install-docker-compose-on-windows/)
 
+- [Voltar ao índice](#índice)
+
+
 ___
 
 ### Preparando o ambiente
@@ -82,6 +109,8 @@ ___
 Para que possamos subir a aplicação, é necessário criar no diretório do projeto um arquivo de environments (<b>.env</b>). Junto do repositório há um arquivo de environments de exemplo pronto para o uso (<b>.env.example</b>), apenas renomeio-o para <b>.env</b>
 
 Abra o postman e importe o arquivo <b>LuizaLabs-Magalu.postman_collection.json</b> pois ele já possui todas as rotas configuradas para testar a aplicação.
+
+- [Voltar ao índice](#índice)
 
 ___
 
@@ -123,13 +152,18 @@ password: xzxgptcW1!
 
 ```
 
-### Acesso à aplicação
+- [Voltar ao índice](#índice)
+
+
+## Acesso à aplicação
 
 A aplicação estará disponível no seguinte endpoint
 
 ```
 http://localhost:3000
 ```
+
+- [Voltar ao índice](#índice)
 
 ___
 
@@ -142,7 +176,8 @@ Acesse através do seu navegador a documentação detalhada da API através do <
 ```
 http://localhost:3000/docs
 ```
-
+- [Voltar ao índice](#índice)
+___
 ## Módulo de Login
 
 <b>/login</b> - POST
@@ -157,7 +192,8 @@ Payload no body da requisição (JSON):
   "password": string
 }
 ```
-
+- [Voltar ao índice](#índice)
+___
 ## Módulo de Usuários
 
 <b>/users - GET</b>
@@ -263,6 +299,9 @@ Payload da requisição:
   }
 }
 ```
+
+- [Voltar ao índice](#índice)
+
 ___
 
 ## Módulo de Produtos
@@ -277,6 +316,9 @@ ___
 <b>/products/:id/ - GET</b>
 
 Rota utilizada para realizar uma busca detalhada de um único produto.
+
+- [Voltar ao índice](#índice)
+
 ___
 
 ## Módulo de Itens Favoritos (Wishlist)
@@ -315,3 +357,4 @@ Rota utiizada para remover um produto da lista de favoritos do usuário logado.
   }
 }
 ```
+- [Voltar ao índice](#índice)
