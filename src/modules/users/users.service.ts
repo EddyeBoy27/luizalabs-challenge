@@ -36,7 +36,7 @@ export class UsersService {
     return users;
   }
 
-  async getUser(email: string, query?: string): Promise<UserPayload> {
+  async getUserByEmail(email: string, query?: string): Promise<UserPayload> {
     const user = (
       await this.userModel.findOne({ email: email }).select(query).exec()
     )?.toObject();
