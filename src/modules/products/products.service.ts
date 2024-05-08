@@ -3,6 +3,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ERROR_MESSAGES, LUIZA_API } from '../../shared/constants';
 import { IProduct } from './model/interfaces/product.interface';
 import { IProducts } from './model/interfaces/products.interface';
+import { ObjectId } from 'mongoose';
 
 @Injectable()
 export class ProductService {
@@ -19,7 +20,7 @@ export class ProductService {
     }
   }
 
-  async getProduct(id: string): Promise<IProduct> {
+  async getProduct(id: ObjectId): Promise<IProduct> {
     const url = `${LUIZA_API.PRODUCT_DETAILED}/${id}/`;
     try {
       const { data } = await this.httpService.axiosRef.get<IProduct>(url);

@@ -11,6 +11,7 @@ import { UserPayload } from './models/payload/users.payload';
 import { UpdateUserDTO } from './models/dto/update-user.dto';
 import { ERROR_MESSAGES, ROLES } from '../../shared/constants';
 import { useHashPassword } from '../../utils/useHashPassword';
+import { IProduct } from '../products/model/interfaces/product.interface';
 
 @Injectable()
 export class UsersService {
@@ -53,7 +54,10 @@ export class UsersService {
     return user;
   }
 
-  async updateUser(id: ObjectId, body: UpdateUserDTO): Promise<UserPayload> {
+  async updateUserData(
+    id: ObjectId,
+    body: UpdateUserDTO,
+  ): Promise<UserPayload> {
     const user = await this.getUserById(id);
 
     if (!user) {
@@ -72,6 +76,42 @@ export class UsersService {
     return updatedUser;
   }
 
+  async updateWishlistUser(
+    userId: ObjectId,
+    wishList: IProduct,
+  ): Promise<void> {
+    const user = await this.getUserById(userId).catch(() => {
+      throw new NotFoundException(ERROR_MESSAGES.NOT_FOUND);
+    });
+
+    const updatedWishlist = wishList
+      ? [...user?.wishlist, ...[wishList]]
+      : user?.wishlist;
+
+    return this.userModel.findByIdAndUpdate(
+      { _id: userId },
+      { wishlist: updatedWishlist },
+    );
+  }
+
+  async removeWishListUser(
+    userId: ObjectId,
+    productId: ObjectId,
+  ): Promise<void> {
+    const user = await this.getUserById(userId).catch(() => {
+      throw new NotFoundException(ERROR_MESSAGES.NOT_FOUND);
+    });
+
+    const updatedWishlist = user.wishlist.filter(
+      (product: IProduct) => product.id !== productId,
+    );
+
+    return this.userModel.findByIdAndUpdate(
+      { _id: userId },
+      { wishlist: updatedWishlist },
+    );
+  }
+
   async deleteUser(userId: ObjectId, id: ObjectId): Promise<void> {
     const user = await this.getUserById(userId);
 
@@ -80,5 +120,11 @@ export class UsersService {
     }
 
     await this.userModel.findByIdAndDelete({ _id: id }).exec();
+  }
+
+  async userHasItem(userId: ObjectId, productId: ObjectId): Promise<boolean> {
+    const user = await this.getUserById(userId);
+
+    return user.wishlist.some((product: IProduct) => product.id === productId);
   }
 }

@@ -11,7 +11,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ObjectId } from 'mongoose';
 import { Request } from 'express';
 import { UsersService } from './users.service';
@@ -44,6 +44,7 @@ export class UsersController {
   @Roles(ROLES.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiResponse({ status: 200, description: 'OK.' })
+  @ApiBearerAuth()
   async getAllUsers(): Promise<UserPayload[]> {
     const users = await this.userService.getAllUsers();
     return users;
@@ -52,6 +53,7 @@ export class UsersController {
   @Get('/:id')
   @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, description: 'OK.' })
+  @ApiBearerAuth()
   async getUser(
     @Param('id') id: ObjectId,
     @Req() req: Request,
@@ -73,6 +75,7 @@ export class UsersController {
   @Patch()
   @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, description: 'OK.' })
+  @ApiBearerAuth()
   async updateUser(
     @Req() req: Request,
     @Body() body: UpdateUserDTO,
@@ -81,7 +84,7 @@ export class UsersController {
       user: { userId },
     } = req;
 
-    const updatedUser = await this.userService.updateUser(userId, body);
+    const updatedUser = await this.userService.updateUserData(userId, body);
     return updatedUser;
   }
 
@@ -89,6 +92,7 @@ export class UsersController {
   @HttpCode(204)
   @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 204, description: 'No content.' })
+  @ApiBearerAuth()
   async deleteUser(
     @Req() req: Request,
     @Body() body: DeleteUserDTO,

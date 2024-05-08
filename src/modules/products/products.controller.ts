@@ -3,6 +3,7 @@ import { ProductService } from './products.service';
 import { IProduct } from './model/interfaces/product.interface';
 import { IProducts } from './model/interfaces/products.interface';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ObjectId } from 'mongoose';
 
 @ApiTags('Products')
 @Controller({ path: 'product' })
@@ -24,7 +25,7 @@ export class ProductController {
   @ApiResponse({ status: 200, description: 'OK.' })
   @ApiResponse({ status: 404, description: 'Not found.' })
   @ApiResponse({ status: 500, description: 'Internal server error.' })
-  async getProduct(@Param('id') id: string): Promise<IProduct> {
+  async getProduct(@Param('id') id: ObjectId): Promise<IProduct> {
     const product = await this.productService.getProduct(id);
     return product;
   }
