@@ -9,6 +9,7 @@ import { AuthModule } from './modules/authentication/auth.module';
 import { ProductModule } from './modules/products/products.module';
 import { WishListModule } from './modules/wishlist/wishlist.module';
 import { RolesGuard } from './modules/authentication/guards/role.guard';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -31,6 +32,12 @@ import { RolesGuard } from './modules/authentication/guards/role.guard';
       }),
       inject: [ConfigService],
     }),
+    ThrottlerModule.forRoot([
+      {
+        limit: 1,
+        ttl: 60,
+      },
+    ]),
     AuthModule,
     UsersModule,
     ProductModule,
