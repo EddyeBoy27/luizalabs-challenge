@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IProduct } from '../../../../modules/products/model/interfaces/product.interface';
+import { ROLES } from '../../../../shared/constants';
 
 @Schema({ collection: 'users', timestamps: true, versionKey: false })
 export class User {
@@ -15,7 +16,7 @@ export class User {
   @Prop()
   wishlist: IProduct[];
 
-  @Prop()
+  @Prop({ default: [ROLES.USER] })
   roles: string[];
 }
 

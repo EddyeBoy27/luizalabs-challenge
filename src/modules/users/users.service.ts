@@ -1,10 +1,16 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { User } from './models/schemas/users.schema';
-import { Model } from 'mongoose';
 import { UserDTO } from './models/dto/users.dto';
-import * as bcrypt from 'bcrypt';
 import { UserPayload } from './models/payload/users.payload';
+import { UpdateUserDTO } from './models/dto/update-user.dto';
+import { ERROR_MESSAGES, ROLES } from '../../shared/constants';
+import { useHashPassword } from '../../utils/useHashPassword';
 
 @Injectable()
 export class UsersService {
@@ -12,15 +18,12 @@ export class UsersService {
 
   async createUser(body: UserDTO): Promise<UserPayload> {
     const { password, ...bodyData } = body;
-    const userExist = await this.userModel
-      .findOne({ email: bodyData.email })
-      .exec();
+    const userExist = await this.getUserByEmail(bodyData.email);
 
     if (userExist) {
       throw new ConflictException(`User ${bodyData.email} already exists.`);
     }
-    const salt = await bcrypt.genSalt(11);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await useHashPassword(password);
     const createdUser = new this.userModel({
       ...bodyData,
       password: hashedPassword,
@@ -42,5 +45,40 @@ export class UsersService {
     )?.toObject();
 
     return user;
+  }
+
+  async getUserById(id: ObjectId): Promise<UserPayload> {
+    const user = (await this.userModel.findOne({ _id: id }).exec())?.toObject();
+
+    return user;
+  }
+
+  async updateUser(id: ObjectId, body: UpdateUserDTO): Promise<UserPayload> {
+    const user = await this.getUserById(id);
+
+    if (!user) {
+      throw new NotFoundException(ERROR_MESSAGES.NOT_FOUND);
+    }
+
+    const hashedPassword = await useHashPassword(body.password);
+
+    const updatedUser = await this.userModel
+      .findOneAndUpdate(
+        { _id: id },
+        { name: body.name, password: hashedPassword },
+        { new: true },
+      )
+      .exec();
+    return updatedUser;
+  }
+
+  async deleteUser(userId: ObjectId, id: ObjectId): Promise<void> {
+    const user = await this.getUserById(userId);
+
+    if (user?.roles.includes(ROLES.USER)) {
+      await this.userModel.findByIdAndUpdate({ _id: userId }).exec();
+    }
+
+    await this.userModel.findByIdAndDelete({ _id: id }).exec();
   }
 }

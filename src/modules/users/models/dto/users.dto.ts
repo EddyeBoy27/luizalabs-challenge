@@ -1,7 +1,8 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsIn,
+  IsOptional,
   IsString,
   Matches,
   MaxLength,
@@ -69,7 +70,6 @@ export class UserDTO {
     each: true,
     message: 'Invalid role provided.',
   })
-  roles: string[];
+  @IsOptional()
+  roles?: string[];
 }
-
-export class UpdateUserDTO extends OmitType(UserDTO, ['password'] as const) {}
