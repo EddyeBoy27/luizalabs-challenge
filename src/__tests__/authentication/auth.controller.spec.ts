@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../../modules/authentication/auth.service';
 import { AuthController } from '../../modules/authentication/auth.controller';
-import { mockLoginUserDTO, mockedJwtToken } from '../mocks/data.mock';
+import { mockLoginUserDTO, mockedJwtToken } from '../mocks/data/data.mock';
 import { UsersService } from '../../modules/users/users.service';
 import { MockUsersModel } from '../mocks/models/users.model.mock';
 import { JwtService } from '@nestjs/jwt';

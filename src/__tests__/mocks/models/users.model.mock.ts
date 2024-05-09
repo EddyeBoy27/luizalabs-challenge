@@ -1,7 +1,11 @@
-import { mockUpdatedUserPayload, mockUserPayload } from '../data.mock';
+import {
+  mockUpdatedUserPayload,
+  mockUserPayload,
+  mockUserWishlistAdd,
+} from '../data/data.mock';
 
 export class MockUsersModel {
-  constructor(private data: any) {}
+  // constructor(private data: any) {}
   static findOne() {
     return {
       select: () => ({
@@ -29,6 +33,12 @@ export class MockUsersModel {
   static findOneAndUpdate() {
     return {
       exec: () => mockUpdatedUserPayload,
+    };
+  }
+
+  static findByIdAndUpdate() {
+    return {
+      exec: () => mockUserWishlistAdd,
     };
   }
 

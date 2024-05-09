@@ -15,7 +15,7 @@ import {
   mockUpdatedUserPayload,
   mockUserDTO,
   mockUserPayload,
-} from '../mocks/data.mock';
+} from '../mocks/data/data.mock';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 
 describe('UsersController', () => {
@@ -48,7 +48,7 @@ describe('UsersController', () => {
     expect(usersController).toBeDefined();
   });
 
-  describe('Create User', () => {
+  describe('User Controller', () => {
     describe('Success', () => {
       it('Should create new user', async () => {
         jest.spyOn(usersService, 'getUserByEmail').mockResolvedValue(null);

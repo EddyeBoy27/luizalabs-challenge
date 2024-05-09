@@ -17,9 +17,6 @@ export class WishListService {
 
   async addNewItem(userId: ObjectId, productId: ObjectId): Promise<void> {
     const itemExist = await this.productService.getProduct(productId);
-    if (!itemExist) {
-      throw new NotFoundException(ERROR_MESSAGES.NOT_FOUND);
-    }
 
     const userHasItem = await this.userService.userHasItem(userId, productId);
 
@@ -30,9 +27,8 @@ export class WishListService {
   }
 
   async removeItem(userId: ObjectId, productId: ObjectId): Promise<void> {
-    const itemExist = await this.productService.getProduct(productId);
     const userHasItem = await this.userService.userHasItem(userId, productId);
-    if (!itemExist || !userHasItem) {
+    if (!userHasItem) {
       throw new NotFoundException(ERROR_MESSAGES.NOT_FOUND);
     }
 

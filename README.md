@@ -24,6 +24,7 @@ ___
 - [Módulo de Usuários](#módulo-de-usuários)
 - [Módulo de Produtos](#módulo-de-produtos)
 - [Módulo de Itens Favoritos](#módulo-de-itens-favoritos-wishlist)
+- [Testes unitários](#testes-unitários)
 
 
 
@@ -357,4 +358,31 @@ Rota utiizada para remover um produto da lista de favoritos do usuário logado.
   }
 }
 ```
+- [Voltar ao índice](#índice)
+___
+
+## Testes Unitários
+
+Para visualizar os testes unitários realizados no projeto, rode o seguinte comando no terminal:
+
+```
+npm run test
+```
+
+* Testes Totais:
+
+![alt text](image.png)
+___
+
+Para visualizar o coverage, rode o seguinte comando no terminal:
+
+```
+npm run test:cov
+```
+___
+* Coverage
+
+![alt text](image-1.png)
+
+
 - [Voltar ao índice](#índice)

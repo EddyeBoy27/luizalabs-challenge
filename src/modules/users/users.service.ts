@@ -82,36 +82,30 @@ export class UsersService {
     userId: ObjectId,
     wishList: IProduct,
   ): Promise<void> {
-    const user = await this.getUserById(userId).catch(() => {
-      throw new NotFoundException(ERROR_MESSAGES.NOT_FOUND);
-    });
+    const user = await this.getUserById(userId);
 
     const updatedWishlist = wishList
       ? [...user?.wishlist, ...[wishList]]
       : user?.wishlist;
 
-    return this.userModel.findByIdAndUpdate(
-      { _id: userId },
-      { wishlist: updatedWishlist },
-    );
+    await this.userModel
+      .findByIdAndUpdate({ _id: userId }, { wishlist: updatedWishlist })
+      .exec();
   }
 
   async removeWishListUser(
     userId: ObjectId,
     productId: ObjectId,
   ): Promise<void> {
-    const user = await this.getUserById(userId).catch(() => {
-      throw new NotFoundException(ERROR_MESSAGES.NOT_FOUND);
-    });
+    const user = await this.getUserById(userId);
 
     const updatedWishlist = user.wishlist.filter(
       (product: IProduct) => product.id !== productId,
     );
 
-    return this.userModel.findByIdAndUpdate(
-      { _id: userId },
-      { wishlist: updatedWishlist },
-    );
+    await this.userModel
+      .findByIdAndUpdate({ _id: userId }, { wishlist: updatedWishlist })
+      .exec();
   }
 
   async deleteUser(userId: ObjectId, id: ObjectId): Promise<void> {
@@ -126,7 +120,6 @@ export class UsersService {
 
   async userHasItem(userId: ObjectId, productId: ObjectId): Promise<boolean> {
     const user = await this.getUserById(userId);
-
-    return user.wishlist.some((product: IProduct) => product.id === productId);
+    return user.wishlist.some((product: IProduct) => product?.id === productId);
   }
 }
