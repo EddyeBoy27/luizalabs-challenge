@@ -61,6 +61,8 @@ describe('AuthController', () => {
 
     describe('Login Fails', () => {
       it('Should return statusCode(404) if email does not exist', async () => {
+        jest.spyOn(usersService, 'getUserByEmail').mockResolvedValue(null);
+
         const signIn = async () => {
           await authController.login({
             email: 'lala@lala.com',

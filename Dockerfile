@@ -29,8 +29,5 @@ COPY --from=builder /usr/src/app/dist ./dist
 # Instala somente as dependências de produção
 RUN npm install --omit=dev
 
-# Instala class-transformer
-RUN npm install class-transformer
-
 # Inicia pela pasta dist
 CMD [ "npm", "run", "start:prod" ]

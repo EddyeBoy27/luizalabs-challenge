@@ -25,13 +25,13 @@ export class UsersService {
       throw new ConflictException(`User ${bodyData.email} already exists.`);
     }
     const hashedPassword = await useHashPassword(password);
-    const createdUser = new this.userModel({
+    const createdUser = await this.userModel.create({
       ...bodyData,
       password: hashedPassword,
     });
-    const user = (await createdUser.save())?.toObject();
+    const savedUser = createdUser?.toObject();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _password, ...userData } = user;
+    const { password: _password, ...userData } = savedUser;
     return userData;
   }
 
@@ -49,7 +49,9 @@ export class UsersService {
   }
 
   async getUserById(id: ObjectId): Promise<UserPayload> {
-    const user = (await this.userModel.findOne({ _id: id }).exec())?.toObject();
+    const user = (
+      await this.userModel.findOne({ _id: id }).select('').exec()
+    )?.toObject();
 
     return user;
   }
@@ -116,7 +118,7 @@ export class UsersService {
     const user = await this.getUserById(userId);
 
     if (user?.roles.includes(ROLES.USER)) {
-      await this.userModel.findByIdAndUpdate({ _id: userId }).exec();
+      await this.userModel.findByIdAndDelete({ _id: userId }).exec();
     }
 
     await this.userModel.findByIdAndDelete({ _id: id }).exec();
