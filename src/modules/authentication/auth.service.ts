@@ -61,7 +61,8 @@ export class AuthService {
       email: user.email,
       roles: user.roles,
     };
-    return { access_token: this.jwtService.sign(payload) };
+    const token = await this.jwtService.sign(payload);
+    return { access_token: token };
   }
 
   async validateUserToken(token: string): Promise<UserPayload> {
