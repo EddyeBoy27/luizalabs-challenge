@@ -232,7 +232,9 @@ Payload da requisição:
     "Authorization": "Bearer <TOKENJWT>"
     "Content-type": "application/json"
   }
-}
+  params: {
+    id: string,
+  }
 ```
 ___
 
@@ -312,11 +314,33 @@ ___
 Rota utilizada para listar todos os produtos disponíveis
 
 Inserir a página de busca no Path da requisição
+
+```
+{
+  headers: {
+    "Content-type": "application/json"
+  },
+  query: {
+    "page": number,
+  }
+}
+```
 ___
 
 <b>/products/:id/ - GET</b>
 
 Rota utilizada para realizar uma busca detalhada de um único produto.
+
+```
+{
+  headers: {
+    "Content-type": "application/json"
+  },
+  params: {
+    "id": string,
+  }
+}
+```
 
 - [Voltar ao índice](#índice)
 
